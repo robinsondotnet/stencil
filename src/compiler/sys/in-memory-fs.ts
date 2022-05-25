@@ -244,11 +244,21 @@ export const createInMemoryFs = (sys: d.CompilerSystem) => {
   };
 
   /**
-   * Synchronous!!! Do not use!!!
+   * **Synchronous!!! Do not use!!!**
    * (Only typescript transpiling is allowed to use)
-   * @param filePath
+   *
+   * Synchronously read a file from a provided path. This function will attempt to use an in-memory cache before
+   * performing a blocking read in the following circumstances:
+   * - no `opts` are provided
+   * - the `useCache` member on `opts` is set to `true`, or is not set
+   *
+   * In the event of a cache hit, the content from the cache will be returned and skip the read.
+   *
+   * @param filePath the path to the file to read
+   * @param opts a configuration to use when reading a file
+   * @returns the contents of the file (read from either disk or the cache).
    */
-  const readFileSync = (filePath: string, opts?: d.FsReadOptions) => {
+  const readFileSync = (filePath: string, opts?: d.FsReadOptions): string => {
     if (opts == null || opts.useCache === true || opts.useCache === undefined) {
       const item = getItem(filePath);
       if (item.exists && typeof item.fileText === 'string') {

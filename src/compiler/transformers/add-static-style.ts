@@ -24,14 +24,19 @@ export const addStaticStyleGetterWithinClass = (
 
 /**
  * Adds static "style" property to the class variable.
+ * ```typescript
  * const MyComponent = class {}
  * MyComponent.style = "styles";
+ * ```
+ * @param styleStatements
+ * @param cmp
+ * @param commentOriginalSelector
  */
 export const addStaticStylePropertyToClass = (
   styleStatements: ts.Statement[],
   cmp: d.ComponentCompilerMeta,
   commentOriginalSelector: boolean
-) => {
+): void => {
   const styleLiteral = getStyleLiteral(cmp, commentOriginalSelector);
   if (styleLiteral) {
     const statement = ts.createStatement(
