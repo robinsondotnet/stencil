@@ -7,15 +7,20 @@ import ts from 'typescript';
 
 /**
  * Adds static "style" getter within the class
+ * ```typescript
  * const MyComponent = class {
  *   static get style() { return "styles"; }
  * }
+ * ```
+ * @param classMembers
+ * @param cmp
+ * @param commentOriginalSelector
  */
 export const addStaticStyleGetterWithinClass = (
   classMembers: ts.ClassElement[],
   cmp: d.ComponentCompilerMeta,
   commentOriginalSelector: boolean
-) => {
+): void => {
   const styleLiteral = getStyleLiteral(cmp, commentOriginalSelector);
   if (styleLiteral) {
     classMembers.push(createStaticGetter('style', styleLiteral));

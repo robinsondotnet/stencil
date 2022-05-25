@@ -23,7 +23,8 @@ export class StyleNode {
 
 // given a string of css, return a simple rule tree
 /**
- * @param {string} text
+ *
+ * @param  text
  * @return {StyleNode}
  */
 export function parse(text: string) {
@@ -169,8 +170,9 @@ export function stringify(node: StyleNode, preserveProperties: any, text = '') {
 }
 
 /**
+ *
  * @param {Array<StyleNode>} rules
- * @return {boolean}
+ * @return
  */
 function _hasMixinRules(rules: any) {
   const r = rules[0];
@@ -178,8 +180,9 @@ function _hasMixinRules(rules: any) {
 }
 
 /**
- * @param {string} cssText
- * @return {string}
+ *
+ * @param cssText
+ * @return
  */
 function removeCustomProps(cssText: string) {
   cssText = removeCustomPropAssignment(cssText);
@@ -195,8 +198,9 @@ export function removeCustomPropAssignment(cssText: string) {
 }
 
 /**
- * @param {string} cssText
- * @return {string}
+ *
+ * @param cssText
+ * @return
  */
 function removeCustomPropApply(cssText: string) {
   return cssText.replace(RX.mixinApply, '').replace(RX.varApply, '');

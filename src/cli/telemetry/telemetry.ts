@@ -141,10 +141,12 @@ export const prepareData = async (
 };
 
 /**
- * Reads package-lock.json, yarn.lock, and package.json files in order to cross reference
+ * Reads package-lock.json, yarn.lock, and package.json files in order to cross-reference
  * the dependencies and devDependencies properties. Pulls up the current installed version
  * of each package under the @stencil, @ionic, and @capacitor scopes.
- * @returns string[]
+ * @param sys
+ * @param config
+ * @returns
  */
 async function getInstalledPackages(
   sys: d.CompilerSystem,
