@@ -21,9 +21,8 @@ export class StyleNode {
   parsedSelector = '';
 }
 
-// given a string of css, return a simple rule tree
 /**
- *
+ * Given a string of css, return a simple rule tree
  * @param  text
  * @return {StyleNode}
  */
