@@ -12,8 +12,9 @@ import ts from 'typescript';
  *   static get style() { return "styles"; }
  * }
  * ```
- * @param classMembers
- * @param cmp
+ * @param classMembers a class to existing members of a class. **this parameter will be mutated** rather than returning
+ * a cloned version
+ * @param cmp the metadata associated with the component being evaluated
  * @param commentOriginalSelector
  */
 export const addStaticStyleGetterWithinClass = (
@@ -34,7 +35,7 @@ export const addStaticStyleGetterWithinClass = (
  * MyComponent.style = "styles";
  * ```
  * @param styleStatements
- * @param cmp
+ * @param cmp the metadata associated with the component being evaluated
  * @param commentOriginalSelector
  */
 export const addStaticStylePropertyToClass = (

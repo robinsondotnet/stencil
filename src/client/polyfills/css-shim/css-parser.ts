@@ -22,30 +22,31 @@ export class StyleNode {
 }
 
 /**
- * Given a string of css, return a simple rule tree
- * @param  text
- * @return {StyleNode}
+ * Given a string of CSS, return a simple rule tree
+ * @param text the CSS to generate a tree from
+ * @returns the generated tree
  */
-export function parse(text: string) {
+export function parse(text: string): StyleNode {
   text = clean(text);
   return parseCss(lex(text), text);
 }
 
-// remove stuff we don't care about that may hinder parsing
 /**
- * @param {string} cssText
- * @return {string}
+ * Remove text that may hinder parsing, such as comments and `@import` statements
+ * @param cssText the CSS to remove unnecessary bit from
+ * @return the 'cleaned' css string
  */
-function clean(cssText: string) {
+function clean(cssText: string): string {
   return cssText.replace(RX.comments, '').replace(RX.port, '');
 }
 
-// super simple {...} lexer that returns a node tree
 /**
- * @param {string} text
- * @return {StyleNode}
+ * Create a `StyleNode` for the given text. This function is a super simple lexer against the provided text to capture
+ * CSS rules between curly braces.
+ * @param text the text to parse containing CSS rules
+ * @returns a new `StyleNode` with the parsed styles attached to it
  */
-function lex(text: string) {
+function lex(text: string): StyleNode {
   const root = new StyleNode();
   root['start'] = 0;
   root['end'] = text.length;
@@ -70,13 +71,13 @@ function lex(text: string) {
   return root;
 }
 
-// add selectors/cssText to node tree
 /**
- * @param {StyleNode} node
- * @param {string} text
- * @return {StyleNode}
+ * Add selectors/cssText to a style node
+ * @param node the CSS node to add styles to
+ * @param text the selectors to add to the style node
+ * @returns the updated style node
  */
-function parseCss(node: StyleNode, text: string) {
+function parseCss(node: StyleNode, text: string): StyleNode {
   let t = text.substring(node['start'], node['end'] - 1);
   node['parsedCssText'] = node['cssText'] = t.trim();
   if (node.parent) {
@@ -115,12 +116,12 @@ function parseCss(node: StyleNode, text: string) {
 }
 
 /**
- * conversion of sort unicode escapes with spaces like `\33 ` (and longer) into
- * expanded form that doesn't require trailing space `\000033`
- * @param {string} s
- * @return {string}
+ * Conversion of unicode escapes with spaces like `\33 ` (and longer) into
+ * expanded form that doesn't require trailing space -> `\000033`
+ * @param s the unicode escape sequence to expand
+ * @return the expanded escape sequence
  */
-function _expandUnicodeEscapes(s: string) {
+function _expandUnicodeEscapes(s: string): string {
   return s.replace(/\\([0-9a-f]{1,6})\s/gi, function () {
     let code = arguments[1],
       repeat = 6 - code.length;
